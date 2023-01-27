@@ -38,20 +38,19 @@ const boxVariants = {
       type: "spring",
       duration: 0.5,
       bounce: 0.5,
+      staggerChildren: 0.1,
     }
   }
 }
 
 const circleVariants = {
   start: {
-    scale: 0,
+    opacity: 0,
+    y: 10,
   },
   end: {
-    scale: 2,
-    transition: {
-      type: "spring",
-      bounce: 0.8,
-    }
+    opacity:1,
+    y: 0,
   },
 };
 
