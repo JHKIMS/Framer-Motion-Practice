@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
+import { motion, useMotionValue, useMotionValueEvent, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
@@ -22,12 +22,14 @@ const boxVariants = {};
 
 function App() {
   const x = useMotionValue(0);
-  useMotionValueEvent(x, "change", (xValue) => {
-    console.log(xValue);
+  const resizeBox = useTransform(x, [-800, 0, 800], [2, 1, 0.3]);
+  useMotionValueEvent(resizeBox, "change", (scaleValue) => {
+    // console.log(xValue);
+    console.log(scaleValue);
   });
   return (
     <Wrapper>
-      <Box style={{ x }} drag="x" dragSnapToOrigin />
+      <Box style={{ x, scale:resizeBox }} drag="x" dragSnapToOrigin />
     </Wrapper>
   );
 }
