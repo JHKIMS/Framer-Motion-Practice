@@ -26,20 +26,48 @@ const Grid = styled.div`
   width: 50vw;
   gap: 10px;
   div:first-child,
-  div:last-child{
+  div:last-child {
     grid-column: span 2;
   }
 `;
 
+const Overlay = styled(motion.div)`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const overlayVariant = {
+  start: { backgroundColor: "rgba(0,0,0,0)" },
+  ing: { backgroundColor: "rgba(0,0,0,0.5)" },
+  end: { backgroundColor: "rgba(0,0,0,0)" },
+};
 function App() {
+  const [clicked, setClicked] = useState(false);
+  const toggle = () => setClicked((prev) => !prev);
   return (
-    <Wrapper>
+    <Wrapper onClick={toggle}>
       <Grid>
-        <Box />
+        <Box layoutId="hello"/>
         <Box />
         <Box />
         <Box />
       </Grid>
+      <AnimatePresence>
+        {clicked ? (
+          <Overlay
+            variants={overlayVariant}
+            initial={"start"}
+            animate={"ing"}
+            exit={"end"}
+          >
+            <Box layoutId="hello" style={{width: 400, height: 200}} />
+          </Overlay>
+        ) : null}
+      </AnimatePresence>
     </Wrapper>
   );
 }
