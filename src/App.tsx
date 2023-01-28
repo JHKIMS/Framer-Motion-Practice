@@ -1,9 +1,9 @@
-import { motion, useMotionValue, useMotionValueEvent, useTransform } from "framer-motion";
+import { motion, useMotionValue, useMotionValueEvent, useScroll, useTransform, useViewportScroll } from "framer-motion";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled(motion.div)`
-  height: 100vh;
+  height: 200vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -35,11 +35,21 @@ function App() {
 
   useMotionValueEvent(rotate, "change", (scaleValue) => {
     // console.log(xValue);
-    console.log(scaleValue);
+    // console.log(scaleValue);
   });
+
+  const {scrollY, scrollYProgress} = useScroll();
+  useMotionValueEvent(scrollY, "change", (latest) =>{
+    console.log("scrollY: ", latest);
+  });
+  useMotionValueEvent(scrollYProgress, "change", (latest) =>{
+    console.log("scrollYProgress: ", latest);
+  });
+  const yBox=useTransform(scrollYProgress, [0,1], [1,5]);
+
   return (
     <Wrapper style={{background: gradient}}>
-      <Box style={{ x, rotateZ:rotate }} drag="x" dragSnapToOrigin />
+      <Box style={{ x, rotateZ:rotate, scale:yBox }} drag="x" dragSnapToOrigin />
     </Wrapper>
   );
 }
