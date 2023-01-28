@@ -63,6 +63,7 @@ body {
   font-weight: 300;
   font-family: 'Source Sans Pro', sans-serif;
   color:black;
+  background-color: rgba(178, 190, 195,1.0);
   line-height: 1.2;
   
 }
