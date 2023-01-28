@@ -36,7 +36,7 @@ const box = {
     x: 0,
     opacity: 1,
     scale: 1,
-    transition: { duration: 1 },
+    transition: { duration: 0.5 },
   },
   exit: (back:boolean)=>{
     return {
@@ -44,7 +44,7 @@ const box = {
       opacity: 0,
       scale: 0,
       rotateY: 180,
-      transition: { duration: 1 },
+      transition: { duration: 0.5 },
     }
   },
 };
@@ -62,7 +62,7 @@ function App() {
   }
   return (
     <Wrapper>
-      <AnimatePresence custom={back}>
+      <AnimatePresence mode="wait" custom={back}>
         <Box
           custom={back}
           variants={box}
