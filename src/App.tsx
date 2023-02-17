@@ -30,7 +30,7 @@ const Grid = styled.div`
     grid-column: span 2;
   } */
 `;
-const Circle = styled.div`
+const Circle = styled.div<CircleProps>`
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -64,24 +64,30 @@ const overlayVariant = {
   end: { backgroundColor: "rgba(0,0,0,0)" },
 };
 
+interface CircleProps {
+  layoutId?: string;
+}
+
 
 function App() {
   const [id, setId] = useState<null | string>(null);
-  // const [isSwitch, setIsSwitch] = useState(false);
-  // const handleCircle = () => {
-  //   setIsSwitch(!isSwitch);
-  // }
+  const [isSwitch, setIsSwitch] = useState(false);
+  const handleCircle = () => {
+    setIsSwitch((prev) => !prev);
+  }
 
   return (
     <Wrapper>
       <Grid>
         {["1", "2", "3", "4"].map((num) => (
           <Box onClick={() => setId(num)} key={num} layoutId={num} whileHover={{scale: 1}}>
-            <Circle/>
+           {/* {!isSwitch && (num === "2" || num === "3") && <Circle layoutId="circleSwitch" />} */}
+           {!isSwitch ? num === "2" && <Circle layoutId="circleStat"/> : null}
+           {!isSwitch ? null : num === "3" && <Circle layoutId="circleStat"/>}
           </Box>
       ))}
     </Grid>
-    {/* <Button onClick={handleCircle}>Move Circle</Button> */}
+    <Button onClick={handleCircle}>Move Circle</Button>
       <AnimatePresence>
         {id ? (
           <Overlay
