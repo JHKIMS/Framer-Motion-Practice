@@ -12,7 +12,7 @@ const Wrapper = styled(motion.div)`
 `;
 const Box = styled(motion.div)`
   height: 200px;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: #b2bec3;
   border-radius: 40px;
   display: flex;
   justify-content: center;
@@ -30,12 +30,12 @@ const Grid = styled.div`
     grid-column: span 2;
   } */
 `;
-const Circle = styled.div<CircleProps>`
+const Circle = styled(motion.div)<CircleProps>`
   border-radius: 50%;
   width: 50px;
   height: 50px;
   background-color: rgb(0, 210, 238);
-`
+`;
 
 const Overlay = styled(motion.div)`
   width: 100%;
@@ -46,17 +46,18 @@ const Overlay = styled(motion.div)`
   align-items: center;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ isSwitch: boolean }>`
   position: fixed;
   bottom: 20px;
   right: 20px;
   border: none;
   border-radius: 20px;
-  background-color: rgb(0, 210, 238);
+  background-color: ${({ isSwitch }) =>
+    isSwitch ? "rgb(0, 210, 238)" : "red"};
   color: white;
   padding: 10px 20px;
   cursor: pointer;
-`
+`;
 
 const overlayVariant = {
   start: { backgroundColor: "rgba(0,0,0,0)" },
@@ -68,26 +69,34 @@ interface CircleProps {
   layoutId?: string;
 }
 
-
 function App() {
   const [id, setId] = useState<null | string>(null);
   const [isSwitch, setIsSwitch] = useState(false);
   const handleCircle = () => {
     setIsSwitch((prev) => !prev);
-  }
+  };
 
   return (
     <Wrapper>
       <Grid>
         {["1", "2", "3", "4"].map((num) => (
-          <Box onClick={() => setId(num)} key={num} layoutId={num} whileHover={{scale: 1}}>
-           {/* {!isSwitch && (num === "2" || num === "3") && <Circle layoutId="circleSwitch" />} */}
-           {!isSwitch ? num === "2" && <Circle layoutId="circleStat"/> : null}
-           {!isSwitch ? null : num === "3" && <Circle layoutId="circleStat"/>}
+          <Box
+            onClick={() => {
+              setId(num)
+              
+            }}
+            key={num}
+            layoutId={num}
+            whileHover={{ scale: 1.5 }}
+          >
+            {!isSwitch ? num === "2" && <Circle layoutId="circleStat" /> : null}
+            {!isSwitch ? null : num === "3" && <Circle layoutId="circleStat" />}
           </Box>
-      ))}
-    </Grid>
-    <Button onClick={handleCircle}>Move Circle</Button>
+        ))}
+      </Grid>
+      <Button onClick={handleCircle} isSwitch={isSwitch}>
+        Move Circle
+      </Button>
       <AnimatePresence>
         {id ? (
           <Overlay
