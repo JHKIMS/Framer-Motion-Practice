@@ -22,14 +22,20 @@ const Box = styled(motion.div)`
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  width: 50vw;
+  grid-template-columns: repeat(2, 1fr);
+  width: 70vw;
   gap: 10px;
-  div:first-child,
+  /* div:first-child,
   div:last-child {
     grid-column: span 2;
-  }
+  } */
 `;
+const Circle = styled.div`
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(0, 210, 238);
+`
 
 const Overlay = styled(motion.div)`
   width: 100%;
@@ -40,21 +46,42 @@ const Overlay = styled(motion.div)`
   align-items: center;
 `;
 
+const Button = styled.button`
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: rgb(0, 210, 238);
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+`
+
 const overlayVariant = {
   start: { backgroundColor: "rgba(0,0,0,0)" },
   ing: { backgroundColor: "rgba(0,0,0,0.5)" },
   end: { backgroundColor: "rgba(0,0,0,0)" },
 };
+
+
 function App() {
   const [id, setId] = useState<null | string>(null);
+  // const [isSwitch, setIsSwitch] = useState(false);
+  // const handleCircle = () => {
+  //   setIsSwitch(!isSwitch);
+  // }
 
   return (
     <Wrapper>
       <Grid>
         {["1", "2", "3", "4"].map((num) => (
-          <Box onClick={() => setId(num)} key={num} layoutId={num} />
-        ))}
-      </Grid>
+          <Box onClick={() => setId(num)} key={num} layoutId={num} whileHover={{scale: 1}}>
+            <Circle/>
+          </Box>
+      ))}
+    </Grid>
+    {/* <Button onClick={handleCircle}>Move Circle</Button> */}
       <AnimatePresence>
         {id ? (
           <Overlay
