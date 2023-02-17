@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { animate, AnimatePresence, motion, Variants } from "framer-motion";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -12,7 +12,7 @@ const Wrapper = styled(motion.div)`
 `;
 const Box = styled(motion.div)`
   height: 200px;
-  background-color: #b2bec3;
+  background-color: white;
   border-radius: 40px;
   display: flex;
   justify-content: center;
@@ -65,6 +65,17 @@ const overlayVariant = {
   end: { backgroundColor: "rgba(0,0,0,0)" },
 };
 
+
+
+
+
+
+const Test=styled(motion.div)`
+  background-color: red;
+  border-radius: 70px;
+  width: 200px;
+  height: 200px;
+`
 interface CircleProps {
   layoutId?: string;
 }
@@ -75,19 +86,20 @@ function App() {
   const handleCircle = () => {
     setIsSwitch((prev) => !prev);
   };
+  const handleBoxClick = (num: string) =>{
+    setId(num);
+  }
 
   return (
     <Wrapper>
       <Grid>
         {["1", "2", "3", "4"].map((num) => (
           <Box
-            onClick={() => {
-              setId(num)
-              
-            }}
+            onClick={() =>handleBoxClick(num)}
             key={num}
             layoutId={num}
-            whileHover={{ scale: 1.5 }}
+            custom={parseInt(num)}
+            whileHover={{ scale: 1.2 }}
           >
             {!isSwitch ? num === "2" && <Circle layoutId="circleStat" /> : null}
             {!isSwitch ? null : num === "3" && <Circle layoutId="circleStat" />}
@@ -106,7 +118,7 @@ function App() {
             animate={"ing"}
             exit={"end"}
           >
-            <Box layoutId={id} style={{ width: 400, height: 200 }} />
+            <Box layoutId={id} style={{ width: 400, height: 200, backgroundColor:"#636e72" }} />
           </Overlay>
         ) : null}
       </AnimatePresence>
